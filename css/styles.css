@@ -1,0 +1,221 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 30%, #2a1a5e 0%, #140f2d 55%, #0a0820 100%);
+  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: none;
+}
+
+/* Phaser's Scale Manager (FIT + CENTER_BOTH) handles sizing and centring. */
+#game-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#game-container canvas {
+  display: block;
+}
+
+/* ---------- Splash (before the engine is up) ---------- */
+#boot-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3vmin;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 40%, #3a2380 0%, #171038 55%, #0b1030 100%);
+  transition: opacity 0.5s ease;
+}
+
+/* slowly spinning sunburst behind the logo */
+#boot-splash::before {
+  content: '';
+  position: absolute;
+  width: 220vmax;
+  height: 220vmax;
+  left: 50%;
+  top: 45%;
+  margin: -110vmax 0 0 -110vmax;
+  background: repeating-conic-gradient(rgba(255, 201, 60, 0.07) 0deg 10deg, transparent 10deg 20deg);
+  animation: splash-spin 60s linear infinite;
+}
+
+#boot-splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-logo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6vmin;
+}
+
+.splash-row {
+  display: flex;
+  gap: 1vmin;
+}
+
+/* letter tiles matching the in-game LetterTile look */
+.splash-row .t {
+  --size: min(9vmin, 10vw);
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-family: 'Lilita One', 'Arial Black', sans-serif;
+  font-size: calc(var(--size) * 0.62);
+  color: #1b1036;
+  background: #fff3d6;
+  border-radius: calc(var(--size) * 0.18);
+  box-shadow: 0 calc(var(--size) * 0.1) 0 #d6b07a, 0 calc(var(--size) * 0.18) 0 rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(-60vh) rotate(-8deg);
+  animation: tile-drop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, tile-bob 1.8s ease-in-out 1s infinite alternate;
+}
+
+.splash-row.big .t {
+  --size: min(10.5vmin, 12vw);
+}
+
+.splash-row .t.coral {
+  background: #ff5e5b;
+  color: #fff;
+  box-shadow: 0 calc(var(--size) * 0.1) 0 #b83a38, 0 calc(var(--size) * 0.18) 0 rgba(0, 0, 0, 0.25);
+}
+
+.splash-row .t.gold {
+  background: #ffc93c;
+  box-shadow: 0 calc(var(--size) * 0.1) 0 #c98f12, 0 calc(var(--size) * 0.18) 0 rgba(0, 0, 0, 0.25);
+}
+
+.splash-row .t.teal {
+  background: #2ec4b6;
+  color: #fff;
+  box-shadow: 0 calc(var(--size) * 0.1) 0 #1b8b80, 0 calc(var(--size) * 0.18) 0 rgba(0, 0, 0, 0.25);
+}
+
+/* stagger the drop for each tile */
+.splash-row.big .t:nth-child(1) { animation-delay: 0.05s, 1s; }
+.splash-row.big .t:nth-child(2) { animation-delay: 0.12s, 1.1s; }
+.splash-row.big .t:nth-child(3) { animation-delay: 0.19s, 1.2s; }
+.splash-row:not(.big) .t:nth-child(1) { animation-delay: 0.26s, 1.3s; }
+.splash-row:not(.big) .t:nth-child(2) { animation-delay: 0.33s, 1.4s; }
+.splash-row:not(.big) .t:nth-child(3) { animation-delay: 0.4s, 1.5s; }
+.splash-row:not(.big) .t:nth-child(4) { animation-delay: 0.47s, 1.6s; }
+.splash-row:not(.big) .t:nth-child(5) { animation-delay: 0.54s, 1.7s; }
+.splash-row:not(.big) .t:nth-child(6) { animation-delay: 0.61s, 1.8s; }
+.splash-row:not(.big) .t:nth-child(7) { animation-delay: 0.68s, 1.9s; }
+.splash-row:not(.big) .t:nth-child(8) { animation-delay: 0.75s, 2s; }
+
+.splash-tag {
+  position: relative;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: min(3.4vmin, 4.5vw);
+  color: #fff3d6;
+  opacity: 0;
+  animation: fade-in 0.6s ease 0.9s forwards;
+}
+
+.splash-dots {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  margin-top: 2vmin;
+}
+
+.splash-dots i {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #2ec4b6;
+  animation: dot-bounce 0.9s infinite ease-in-out;
+}
+
+.splash-dots i:nth-child(2) {
+  animation-delay: 0.15s;
+  background: #ffc93c;
+}
+
+.splash-dots i:nth-child(3) {
+  animation-delay: 0.3s;
+  background: #ff5e5b;
+}
+
+@keyframes tile-drop {
+  0% {
+    opacity: 1;
+    transform: translateY(-60vh) rotate(-8deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes tile-bob {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-0.8vmin);
+  }
+}
+
+@keyframes dot-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes splash-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Font warm-up (off-screen) ---------- */
+#font-warmup {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+}
+
+#font-warmup .f-display {
+  font-family: 'Lilita One';
+}
+
+#font-warmup .f-body {
+  font-family: 'Nunito';
+  font-weight: 900;
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#140f2d" />
+    <title>Pun Intended — TEST MODE</title>
+
+    <!-- TEST BUILD ONLY: never deploy this file (tools/build-release.sh leaves it out) -->
+    <script>window.PUN_TEST_MODE = true;</script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@800;900&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/test.css" />
+
+    <!-- Phaser Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.min.js"></script>
+
+    <!--
+      Rewarded ads (optional): Google H5 Games Ads. Replace ca-pub-XXXX with your
+      AdSense publisher id and uncomment both scripts. AdService picks it up
+      automatically; without it a stand-in ad screen is shown.
+
+    <script async data-adbreak-test="on"
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX"
+        crossorigin="anonymous"></script>
+    <script>
+        window.adsbygoogle = window.adsbygoogle || [];
+        window.adBreak = window.adConfig = function (o) { adsbygoogle.push(o); };
+        adConfig({ preloadAdBreaks: 'on', sound: 'on' });
+    </script>
+    -->
+</head>
+
+<body>
+    <!-- Splash: shown instantly while the engine and fonts load, then
+         handed over seamlessly to PreloadScene's animated loader -->
+    <div id="boot-splash">
+        <div class="splash-logo">
+            <div class="splash-row big">
+                <i class="t coral">P</i><i class="t gold">U</i><i class="t teal">N</i>
+            </div>
+            <div class="splash-row">
+                <i class="t">I</i><i class="t">N</i><i class="t">T</i><i class="t">E</i><i class="t">N</i><i class="t">D</i><i class="t">E</i><i class="t">D</i>
+            </div>
+        </div>
+        <div class="splash-tag">Read the picture. Crack the pun.</div>
+        <div class="splash-dots"><i></i><i></i><i></i></div>
+    </div>
+
+    <!-- Phaser canvas container -->
+    <div id="game-container"></div>
+
+    <!-- Hidden glyphs so the browser starts fetching the web fonts right away -->
+    <div id="font-warmup" aria-hidden="true">
+        <span class="f-display">Aa</span><span class="f-body">Aa</span>
+    </div>
+
+    <!-- Config & data -->
+    <script src="js/config/GameConfig.js"></script>
+    <script src="js/data/CardsData.js"></script>
+
+    <!-- Core -->
+    <script src="js/core/Theme.js"></script>
+    <script src="js/core/Utils.js"></script>
+    <script src="js/core/SoundFX.js"></script>
+    <script src="js/core/MusicPlayer.js"></script>
+    <script src="js/core/AdService.js"></script>
+    <script src="js/core/TextureFactory.js"></script>
+
+    <!-- UI components -->
+    <script src="js/ui/Icons.js"></script>
+    <script src="js/ui/GameButton.js"></script>
+    <script src="js/ui/IconButton.js"></script>
+    <script src="js/ui/ModalPanel.js"></script>
+    <script src="js/ui/ToggleSwitch.js"></script>
+    <script src="js/ui/LetterTile.js"></script>
+    <script src="js/ui/PunCard.js"></script>
+    <script src="js/ui/AnimatedBackground.js"></script>
+    <script src="js/ui/Effects.js"></script>
+    <script src="js/ui/CardZoom.js"></script>
+    <script src="js/ui/AdOverlay.js"></script>
+    <script src="js/ui/SpeedMeter.js"></script>
+    <script src="js/ui/GameHud.js"></script>
+    <script src="js/ui/SettingsPanel.js"></script>
+    <script src="js/ui/HowToPlayPanel.js"></script>
+    <script src="js/ui/TutorialCoach.js"></script>
+
+    <!-- Game boards -->
+    <script src="js/game/TileBoard.js"></script>
+    <script src="js/game/ChoiceBoard.js"></script>
+    <script src="js/game/TypeBoard.js"></script>
+
+    <!-- Scenes -->
+    <script src="js/scenes/PreloadScene.js"></script>
+    <script src="js/scenes/MenuScene.js"></script>
+    <script src="js/scenes/GameScene.js"></script>
+    <script src="js/scenes/ResultsScene.js"></script>
+    <script src="js/scenes/TransitionScene.js"></script>
+
+    <!-- Test tools (answer reveal, auto-solve...) -->
+    <script src="js/debug/TestTools.js"></script>
+
+    <!-- Entry point -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
